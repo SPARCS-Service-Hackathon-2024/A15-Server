@@ -2,11 +2,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const http = require('http'); // HTTP 모듈 추가
+const app = express();
 const server = http.createServer(app);
+
 const userRoutes = require('./src/api/routes/userRoutes');
+const postRoutes = require('./src/api/routes/postRoutes');
+const commentRoutes = require('./src/api/routes/commentRoutes');
 const db = require('./src/config/db');
 
-const app = express();
 const io = require("socket.io")(server);
 
 app.use(cors());
@@ -15,6 +18,8 @@ app.use(bodyParser.json({
 }));
 
 app.use('/users', userRoutes);
+app.use('/posts', postRoutes);
+app.use('/comments', commentRoutes);
 
 db.connectDatabase();
 
