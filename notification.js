@@ -9,7 +9,7 @@ admin.initializeApp({
 
 // 푸시 알림을 보낼 토큰. 이 값은 앱에서 생성된 토큰입니다.
 const token =
-  "cRHGt5QdR36yHqBE7DTRUn:APA91bHofV-1dLv_DKypfu6Ri1zGQC7f2rWQGGGdMD6_ELsUGSKVq6BIGYfc1mMNYv-PzIZQ1jrLs1FD2UFbTB6LHkMQSfpKpEMSFu3iNjff_EGeVaM9r9-qMhYwmJxSYKr8O6ffPQ32";
+  "cvHt9CHxQBCLo0H3eQxkXB:APA91bGB0loVW-aE2z2QFItzMVhpexGjAbFhG4N-gRJXra8gS5_wEQf0CTggkAlHoF6vPCKlarDn-URmGsUNmiArmSV7AEXG7UbeKj2aO-4RKcoyLSQzoXcOUhXXX0sD0CBFT7_q8VN7";
 
 const message = {
   notification: {
@@ -20,14 +20,21 @@ const message = {
 };
 
 // 메시지를 보냅니다.
-admin
-  .messaging()
-  .send(message)
-  .then((response) => {
-    // 성공적으로 메시지를 보냈을 때의 처리
-    console.log("Successfully sent message:", response);
-  })
-  .catch((error) => {
-    // 메시지를 보내는데 실패했을 때의 처리
-    console.log("Error sending message:", error);
-  });
+const executeTask = () => {
+  admin
+    .messaging()
+    .send(message)
+    .then((response) => {
+      // 성공적으로 메시지를 보냈을 때의 처리
+      console.log("Successfully sent message:", response);
+    })
+    .catch((error) => {
+      // 메시지를 보내는데 실패했을 때의 처리
+      console.log("Error sending message:", error);
+    });
+};
+
+setInterval(executeTask, 300000); // 300000ms = 5분
+
+// 스크립트 시작 시 executeTask 함수를 즉시 실행 (선택사항)
+executeTask();
