@@ -2,9 +2,9 @@ const Post = require('../../models/Post');
 
 exports.createPost = async (req, res) => {
   try {
-    const { content } = req.body;
-    const userId = req.user._id;
-    const newPost = new Post({ userId, content });
+    const { userId, content, photo, name, imageUrl } = req.body;
+    console.log(req.body);
+    const newPost = new Post({ userId, content, photo, name, imageUrl });
     await newPost.save();
     res.status(201).json(newPost);
   } catch (error) {
@@ -15,6 +15,7 @@ exports.createPost = async (req, res) => {
 exports.getPosts = async (req, res) => {
   try {
     const posts = await Post.find().populate('userId', 'username');
+    console.log(posts);
     res.status(200).json(posts);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching posts', error: error.message });

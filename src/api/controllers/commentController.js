@@ -3,8 +3,7 @@ const Comment = require('../../models/Comment');
 // 댓글 작성
 exports.createComment = async (req, res) => {
   try {
-    const { postId, content } = req.body;
-    const userId = req.user._id; // 사용자 인증을 통해 얻은 사용자 ID
+    const { postId, userId, content } = req.body;
     const newComment = new Comment({ postId, userId, content });
     await newComment.save();
     res.status(201).json(newComment);
@@ -16,8 +15,10 @@ exports.createComment = async (req, res) => {
 // 특정 게시글의 댓글 목록 조회
 exports.getCommentsByPost = async (req, res) => {
   try {
+    console.log("hello2");
     const { postId } = req.params;
     const comments = await Comment.find({ postId }).populate('userId', 'username');
+    console.log(comments);
     res.status(200).json(comments);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching comments', error: error.message });
